@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kokou.mapper.ClassMapper">
+    <insert id="insert">
+        INSERT class (name, create_time, update_time, timestamp, nameen, namekr, department, level )
+        VALUES ( #{name}, #{createTime}, #{updateTime}, #{timestamp}, #{nameen}, #{namekr}, #{department}, #{level} )
+    </insert>
+    
+    <update id="update">
+        UPDATE class
+        SET
+        update_time = #{updateTime}
+        <if test="name != null">
+            <if test="name != ''">
+                ,name = #{name}
+            </if>
+        </if>
+        <if test="nameen != null">    
+            ,nameen = #{nameen}
+        </if>
+        <if test="namekr != null">
+            ,namekr = #{namekr}
+        </if>
+        <if test="department != null">
+            <if test="department != ''">
+                ,department = #{department}
+            </if>
+        </if>
+        <if test="level != null">
+            ,level = #{level}
+        </if>
+        <if test="level == null">
+            , level = null
+        </if>
+        
+        WHERE id = #{classId}
+    </update>
+    
+    <select id="getIdByTimestamp" resultType="int">
+        SELECT t.id AS teacherId
+        FROM class t
+        WHERE
+            t.timestamp = #{timestamp}
+    </select>
+    
+    
+    <select id="getList" resultType="map">
+        SELECT
+            t.id AS classId,
+            t.name AS name,
+            t.namekr AS namekr,
+            t.nameen AS nameen,
+            t.department AS department,
+            d.name AS departmentLabel,
+            t.level AS level
+        FROM class t
+        LEFT JOIN department d ON d.code = t.department
+        WHERE 1 = 1
+        <if test="classId != null">
+            AND t.id = #{classId}
+        </if>
+        <if test="schoolKind != null">
+            AND t.department = #{schoolKind}
+        </if>
+        <if test="schoolYear != null">
+            AND t.level = #{schoolYear}
+        </if>
+        ORDER BY
+            d.sort ASC, t.level ASC, t.name ASC
+    </select>
+</mapper>

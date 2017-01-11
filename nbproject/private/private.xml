@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/J:/kokou/src/java/kokou/struts/common.xml</file>
+            <file>file:/J:/kokou/web/login.js</file>
+            <file>file:/J:/kokou/web/init-ext.js</file>
+            <file>file:/J:/kokou/src/java/kokou/struts/students.xml</file>
+            <file>file:/J:/kokou/web/include-ext.js</file>
+            <file>file:/J:/kokou/src/java/kokou/action/StartAction.java</file>
+            <file>file:/J:/kokou/web/app/data/datas.json</file>
+            <file>file:/J:/kokou/web/index.jsp</file>
+            <file>file:/J:/kokou/web/META-INF/context.xml</file>
+            <file>file:/J:/kokou/src/java/kokou/action/LoginAction.java</file>
+            <file>file:/J:/kokou/src/java/struts.xml</file>
+            <file>file:/J:/kokou/web/WEB-INF/view/login/success.jsp</file>
+            <file>file:/J:/kokou/web/app/view/layout/Login.js</file>
+            <file>file:/J:/kokou/src/java/kokou/struts/teachers.xml</file>
+            <file>file:/J:/kokou/src/java/kokou/struts/reports.xml</file>
+            <file>file:/J:/kokou/src/java/kokou/struts/lesson.xml</file>
+            <file>file:/J:/kokou/src/java/kokou/action/DefaultAction.java</file>
+            <file>file:/J:/kokou/web/app/view/panel/TabPanel.js</file>
+            <file>file:/J:/kokou/web/app/controller/Users.js</file>
+            <file>file:/J:/kokou/web/app/panel/EditPanel.js</file>
+            <file>file:/J:/kokou/web/app/data/users.json</file>
+            <file>file:/J:/kokou/web/WEB-INF/web.xml</file>
+            <file>file:/J:/kokou/web/WEB-INF/view/main/first.jsp</file>
+            <file>file:/J:/kokou/web/app/data/Saver.js</file>
+            <file>file:/J:/kokou/web/WEB-INF/view/login.jsp</file>
+            <file>file:/J:/kokou/web/WEB-INF/view/login/fail.jsp</file>
+            <file>file:/J:/kokou/web/app/view/layout/Borders.js</file>
+            <file>file:/J:/kokou/src/java/kokou/struts/classes.xml</file>
+            <file>file:/J:/kokou/web/app/view/panel/LoginPanel.js</file>
+            <file>file:/J:/kokou/web/app.js</file>
+            <file>file:/J:/kokou/src/java/applicationContext.xml</file>
+            <file>file:/J:/kokou/src/java/mybatis.xml</file>
+            <file>file:/J:/kokou/web/WEB-INF/view/login/input.jsp</file>
+            <file>file:/J:/kokou/web/app/data/teachers.json</file>
+            <file>file:/J:/kokou/src/java/kokou/struts/all.xml</file>
+            <file>file:/J:/kokou/src/java/kokou/mapper/LoginMapper.java</file>
+        </group>
+    </open-files>
+</project-private>

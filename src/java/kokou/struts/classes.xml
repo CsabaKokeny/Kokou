@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <package name="kokou-classes" extends="kokou-default" namespace="/class">
+        <action name="save" class="class.save"></action>
+        <action name="list" class="class.list"></action>
+        <action name="detail" class="class.detail"></action>
+    </package>
+</struts>

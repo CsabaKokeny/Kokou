@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kokou.mapper.v2.StudentMapper">
+    <resultMap type="kokou.model.v2.SchoolClass" id="SchoolClassResult">
+        <result property="schoolYear" column="school_year"/>
+        <result property="name" column="name"/>
+    </resultMap>
+    <resultMap type="kokou.model.v2.Allergy" id="AllergyResult">
+        <result property="has" column="allergy_has"/>
+        <result property="name" column="allergy_name"/>
+    </resultMap>
+    <resultMap type="kokou.model.v2.Foreigner" id="ForeignerResult">
+        <result property="no" column="foreigner_no"/>
+    </resultMap>
+    <resultMap type="kokou.model.v2.Passport" id="PassportResult">
+        <result property="has" column="passport_has"/>
+        <result property="no" column="passport_no"/>
+    </resultMap>
+    <resultMap type="kokou.model.v2.student.StudentHealth" id="StudentHealthResult">
+        <result property="importantNote" column="health_important"/>
+        <association property="allergy" resultMap="AllergyResult"/>
+    </resultMap>
+    <resultMap type="kokou.model.v2.student.StudentTransport" id="StudentTransportResult">
+        <result property="sector" column="transport_sector"/>
+        <result property="startStation" column="transport_start"/>
+        <result property="endStation" column="transport_end"/>
+        <result property="type" column="transport_type"/>
+        <result property="typeLabel" column="transport_typelabel"/>
+    </resultMap>
+    <resultMap type="kokou.model.v2.student.StudentAttending" id="StudentAttendingResult">
+        <result property="duration" column="attending_duration"/>
+        <collection property="transportList" column="student_id" select="findTransportByStudentId"/>
+    </resultMap>
+    <resultMap type="kokou.model.v2.student.StudentCareer" id="StudentCareerResult">
+        <result property="schoolName" column="career_schoolname"/>
+        <result property="preSchoolName" column="career_preschoolname"/>
+        <result property="schoolState" column="career_schoolstate"/>
+        <result property="schoolStateLabel" column="career_schoolstatelabel"/>
+        <result property="enterDate" column="career_enterdate"/>
+        <result property="admitDate" column="career_admitdate"/>
+        <result property="explusionDate" column="career_explusiondate"/>
+        <result property="graduationDate" column="career_graduationdate"/>
+    </resultMap>
+    <resultMap type="kokou.model.v2.student.StudentContact" id="StudentContactResult">
+        <result property="name" column="contact_name"/>
+        <result property="phone" column="contact_phone"/>
+        <result property="relation" column="contact_relation"/>
+        <result property="relationLabel" column="contact_relationlabel"/>
+    </resultMap>
+    <resultMap type="kokou.model.v2.student.StudentFamilyMember" id="StudentFamilyMemberResult">
+        <result property="with" column="family_with"/>
+        <result property="relation" column="family_relation"/>
+        <result property="relationLabel" column="family_relationlabel"/>
+        <result property="name" column="family_name"/>
+        <result property="sex" column="family_sex"/>
+        <result property="sexLabel" column="family_sexlabel"/>
+        <result property="birthday" column="family_birthday"/>
+        <result property="address" column="family_address"/>
+        <result property="note" column="family_note"/>
+    </resultMap>
+    <resultMap type="kokou.model.v2.student.StudentKeeper" id="StudentKeeperResult">
+        <result property="relation" column="keeper_relation"/>
+        <result property="relationLabel" column="keeper_relationlabel"/>
+        <result property="name" column="keeper_name"/>
+        <result property="nameKr" column="keeper_namekr"/>
+        <result property="nameNick" column="keeper_namenick"/>
+        <result property="sex" column="keeper_sex"/>
+        <result property="sexLabel" column="keeper_sexlabel"/>
+        <result property="birthday" column="keeper_birthday"/>
+        <result property="job" column="keeper_job"/>
+        <result property="address" column="keeper_address"/>
+        <result property="alterAddress" column="keeper_address2"/>
+        <result property="phone" column="keeper_phone"/>
+        <result property="phoneType" column="keeper_phonetype"/>
+        <result property="phoneTypeLabel" column="keeper_phonetypelabel"/>
+        <result property="fax" column="keeper_fax"/>
+        <result property="nation" column="keeper_nation"/>
+        <result property="nationLabel" column="keeper_nationLabel"/>
+        <result property="mail" column="keeper_mail"/>
+    </resultMap>
+    <resultMap type="kokou.model.v2.Student" id="StudentResult">
+        <id property="id" column="student_id"/> 
+        <result property="enterYear" column="student_enteryear"/>
+        <result property="enterMonth" column="student_entermonth"/>
+        <result property="enterDay" column="student_enterday"/>
+        <result property="enterSchoolKind" column="student_enterschoolkind"/>
+        <result property="enterSchoolKindLabel" column="student_enterschoolkindlabel"/>
+        <result property="enterSchoolYear" column="student_enterschoolyear"/>
+        <result property="code" column="student_code"/>
+        <result property="rollNo" column="student_rollno"/>
+        <result property="schoolYear" column="student_schoolyear"/>
+        <result property="name" column="student_name"/>
+        <result property="nameKr" column="student_namekr"/>
+        <result property="nameNick" column="student_namenick"/>
+        <result property="sex" column="student_sex"/>
+        <result property="sexLabel" column="student_sexlabel"/>
+        <result property="birthday" column="student_birthday"/>
+        <result property="address" column="student_address"/>
+        <result property="alterAddress" column="student_address2"/>
+        <result property="phone" column="student_phone"/>
+        <result property="phoneTypeLabel" column="student_phonetypelabel"/>
+        <result property="fax" column="student_fax"/>
+        <result property="emergencyContacts" column="emergency_contacts"/>
+        <result property="nation" column="student_nation"/>
+        <result property="nationLabel" column="student_nationlabel"/>
+        <result property="note" column="student_note"/>
+        <association property="passport" resultMap="PassportResult"/>
+        <association property="foreigner" resultMap="ForeignerResult"/>
+        <association property="attending" resultMap="StudentAttendingResult"/>
+        <association property="health" resultMap="StudentHealthResult"/>
+        <association property="keeper" column="student_id" select="findKeeperByStudentId"/>
+        <association property="schoolClass" column="student_id" select="findSchoolClassByStudentId"/>
+        <collection property="careerList" column="student_id" select="findCareerByStudentId"/>
+        <collection property="familyList" column="student_id" select="findFamilyMemberByStudentId"/>
+        <collection property="contactList" column="student_id" select="findContactByStudentId"/>
+    </resultMap>
+    <select id="findSchoolClassByStudentId" parameterType="int" resultMap="SchoolClassResult">
+        SELECT
+            name, school_year, student_id
+        FROM student_class
+        WHERE student_id = #{studentId}
+    </select>
+    <select id="findContactByStudentId" parameterType="int" resultMap="StudentContactResult">
+        SELECT
+            sc.name AS contact_name,
+            sc.phone AS contact_phone,
+            sc.relation AS contact_relation,
+            r.name AS contact_relationlabel
+        FROM student_contact sc
+        LEFT JOIN relation_type r ON sc.relation = r.`code`
+        WHERE sc.student_id = #{studentId}
+        ORDER BY sc.sort ASC
+    </select>
+    <select id="findTransportByStudentId" parameterType="int" resultMap="StudentTransportResult">
+        SELECT
+            sb.sector AS transport_sector,
+            sb.start_station AS transport_start,
+            sb.end_station AS transport_end,
+            sb.bus AS transport_type,
+            b.name AS transport_typelabel
+        FROM student_bus sb
+        LEFT JOIN bus b ON sb.bus = b.code
+        WHERE sb.student_id = #{studentId}
+        ORDER BY sb.sort ASC
+    </select>
+    <select id="findFamilyMemberByStudentId" parameterType="int" resultMap="StudentFamilyMemberResult">
+        SELECT
+            f.name AS family_name,
+            f.relation AS family_relation,
+            r.name AS family_relationlabel,
+            f.birthday AS family_birthday,
+            f.address AS family_address,
+            f.`with` AS family_with,
+            f.note AS family_note
+        FROM student_family f
+        LEFT JOIN relation_type r ON r.`code`=f.relation
+        WHERE f.student_id = #{studentId}
+        ORDER BY f.sort ASC
+    </select>
+    <select id="findCareerByStudentId" parameterType="int" resultMap="StudentCareerResult">
+        SELECT
+            c.school_name AS career_schoolname,
+            c.school_state AS career_schoolstate,
+            t.name AS career_schoolstatelabel,
+            c.pre_school_name AS career_preschoolname,
+            c.enter_date AS career_enterdate,
+            c.admit_date AS career_admitdate,
+            c.gradu_date AS career_graduationdate,
+            c.explu_date AS career_explusiondate
+        FROM student_career c
+        LEFT JOIN school_state_type t ON c.school_state = t.`code`
+        WHERE c.student_id = #{studentId}
+        ORDER BY c.sort ASC
+    </select>
+    <select id="findKeeperByStudentId" parameterType="int" resultMap="StudentKeeperResult">
+        SELECT
+            k.name AS keeper_name,
+            k.namekr AS keeper_namekr,
+            k.namenick AS keeper_namenick,
+            k.relation AS keeper_relation,
+            r.name AS keeper_relationlabel,
+            k.sex AS keeper_sex,
+            s.name AS keeper_sexlabel,
+            k.birthday AS keeper_birthday,
+            k.job AS keeper_job,
+            k.address AS keeper_address,
+            k.address2 AS keeper_address2,
+            k.phone AS keeper_phone,
+            k.phone_type AS keeper_phonetype,
+            p.name AS keeper_phonetypelabel,
+            k.fax AS keeper_fax,
+            k.email AS keeper_mail,
+            k.nation AS keeper_nation,
+            n.name AS keeper_nationlabel
+        FROM student_keeper k
+        LEFT JOIN sex s ON k.sex = s.code
+        LEFT JOIN phone_type p ON k.phone = p.code
+        LEFT JOIN nation n ON k.nation = n.code
+        LEFT JOIN relation_type r ON k.relation = r.code
+        WHERE k.student_id = #{studentId}
+    </select>
+    <select id="find" resultMap="StudentResult">
+        SELECT
+            s.id AS student_id,
+            s.enter_year AS student_enteryear,
+            s.enter_month AS student_entermonth,
+            s.enter_day AS student_enterday,
+            s.enter_schoolkind AS student_enterschoolkind,
+            d.name AS student_enterschoolkindlabel,
+            s.enter_schoolyear AS student_enterschoolyear,
+            s.code AS student_code,
+            s.rollno AS student_rollNo,
+            s.name AS student_name,
+            s.namekr AS student_namekr,
+            s.namenick AS student_namenick,
+            s.sex AS student_sex,
+            sex.name AS student_sexlabel,
+            s.birthday AS student_birthday,
+            s.address AS student_address,
+            s.address2 AS student_address2,
+            s.phone AS student_phone,
+            s.fax AS student_fax,
+            s.emergency_contacts AS emergency_contacts,
+            s.nation AS student_nation,
+            n.name AS student_nationlabel,
+            s.schoolyear+"" AS student_schoolyear,
+            s.note AS student_note,
+            s.attending_time AS attending_duration,
+            s.has_passport AS passport_has,
+            s.passport_no AS passport_no,
+            s.foreigner_no AS foreigner_no,
+            s.has_allergy AS allergy_has,
+            s.allergy_name AS allergy_name,
+            s.health_important AS health_important
+        FROM student2 s
+        LEFT JOIN department d
+        ON s.enter_schoolkind = d.code
+        LEFT JOIN sex
+        ON s.sex = sex.code
+        LEFT JOIN nation n
+        ON s.nation = n.code
+        LEFT JOIN student_class sc
+        ON s.id = sc.student_id
+        WHERE 1=1
+        <if test="studentId != null">
+            AND s.id = #{studentId}
+        </if>
+        
+        <if test="schoolYear != null">
+            AND sc.school_year = #{schoolYear}
+        </if>
+        <if test="className != null">
+            AND sc.name = #{className}
+        </if>
+        <if test="enterYear != null">
+            AND s.enter_year = #{enterYear}
+        </if>
+        <if test="enterSchoolKind != null">
+            AND s.enter_schoolkind = #{enterSchoolKind}
+        </if>
+        <if test="schoolKind != null"><!--
+            AND sc.department = #{schoolKind}-->
+            AND s.enter_schoolkind = #{schoolKind}
+        </if>
+        ORDER BY  d.sort ASC, sc.school_year ASC, sc.name ASC, s.code ASC
+        
+    </select>
+    <select id="getCount" resultType="int">
+        SELECT count(*) AS total
+        FROM student2 s
+        LEFT JOIN student_class sc
+        ON s.id = sc.student_id
+        WHERE 1=1
+        <if test="studentId != null">
+            AND s.id = #{studentId}
+        </if>
+        <if test="schoolYear != null">
+            AND sc.school_year = #{schoolYear}
+        </if>
+        <if test="className != null">
+            AND sc.name = #{className}
+        </if>
+        <if test="enterYear != null">
+            AND s.enter_year = #{enterYear}
+        </if>
+        <if test="enterSchoolKind != null">
+            AND s.enter_schoolkind = #{enterSchoolKind}
+        </if>
+        <if test="schoolKind != null"><!--
+            AND sc.department = #{schoolKind}-->
+            AND s.enter_schoolkind = #{schoolKind}
+        </if>
+    </select>
+    <select id="getIdByTimestamp" resultType="Integer">
+        SELECT id
+        FROM student2
+        WHERE timestamp = #{timestamp}
+    </select>
+    <update id="update">
+        UPDATE student2
+        SET
+        enter_year=#{enterYear},
+        enter_month=#{enterMonth},
+        enter_day=#{enterDay},
+        enter_schoolkind=#{enterSchoolKind},
+        enter_schoolyear=#{enterSchoolYear},
+        code=#{code},
+        rollno=#{rollNo},
+        name=#{name},
+        namekr=#{nameKr},
+        namenick=#{nameNick},
+        sex=#{sex},
+        birthday=#{birthday},
+        address=#{address},
+        address2=#{alterAddress},
+        phone=#{phone}, 
+        fax=#{fax},
+        nation=#{nation},
+        schoolyear=#{schoolYear}, 
+        attending_time=#{attending.duration},
+        has_passport=#{passport.has},
+        passport_no=#{passport.no},
+        foreigner_no=#{foreigner.no},
+        has_allergy=#{health.allergy.has},
+        allergy_name=#{health.allergy.name},
+        health_important=#{health.importantNote},
+        note=#{note}
+        WHERE id=#{id}
+    </update>
+    <insert id="insert">
+        INSERT INTO student2
+        ( enter_year, enter_month, enter_day, enter_schoolkind, enter_schoolyear, code, rollno, name, namekr, namenick, sex, birthday, address, address2, phone, fax, nation, schoolyear, attending_time, has_passport, passport_no, foreigner_no, has_allergy, allergy_name, health_important, note, timestamp)
+        VALUES
+        ( #{enterYear}, #{enterMonth}, #{enterDay},  #{enterSchoolKind}, #{enterSchoolYear}, #{code}, #{rollNo}, #{name}, #{nameKr}, #{nameNick}, #{sex}, #{birthday}, #{address}, #{alterAddress}, #{phone}, #{fax}, #{nation}, #{schoolYear}, #{attending.duration},#{passport.has},#{passport.no}, #{foreigner.no},#{health.allergy.has},#{health.allergy.name},#{health.importantNote},#{note}, #{timestamp})
+    </insert>
+    <insert id="insertKeeper">
+        INSERT INTO student_keeper
+        ( student_id, name, namekr, namenick, relation, sex, birthday, job, address, address2, phone, phone_type, fax, email, nation)
+        VALUES
+        ( #{studentId}, #{name}, #{nameKr}, #{nameNick}, #{relation}, #{sex}, #{birthday}, #{job}, #{address}, #{alterAddress}, #{phone}, #{phoneType}, #{fax}, #{mail}, #{nation})
+    </insert>
+    <delete id="deleteKeeper">
+        DELETE FROM student_keeper
+        WHERE student_id = #{studentId}
+    </delete>
+    <insert id="insertFamily">
+        INSERT INTO student_family
+        ( student_id, name, relation, birthday, address, `with`, `sort`, note)
+        VALUES
+        ( #{studentId}, #{name}, #{relation}, #{birthday}, #{address}, #{with}, #{sort}, #{note})
+    </insert>
+    <delete id="deleteFamily">
+        DELETE FROM student_family
+        WHERE student_id = #{studentId}
+    </delete>
+    <insert id="insertClass">
+        INSERT INTO student_class
+        ( student_id, school_year, name)
+        VALUES ( #{studentId}, #{schoolYear}, #{className})
+    </insert>
+    <delete id="deleteClass">
+        DELETE FROM student_class
+        WHERE student_id = #{studentId}
+    </delete>
+    <insert id="insertContact">
+        INSERT INTO student_contact
+        (student_id, name, phone, relation, sort)
+        VALUES
+        ( #{studentId}, #{name}, #{phone}, #{relation}, #{sort})
+    </insert>
+    <delete id="deleteContact">
+        DELETE FROM student_contact
+        WHERE student_id = #{studentId}
+    </delete>
+    <insert id="insertCareer">
+        INSERT INTO student_career
+        (student_id, school_name, pre_school_name, school_state, enter_date, admit_date, gradu_date, explu_date, sort)
+        VALUES
+        (#{studentId}, #{schoolName}, #{preSchoolName}, #{schoolState}, #{enterDate}, #{admitDate}, #{graduationDate}, #{explusionDate}, #{sort})
+    </insert>
+    <delete id="deleteCareer">
+        DELETE FROM student_career
+        WHERE student_id = #{studentId}
+    </delete>
+    <insert id="insertTransport">
+        INSERT INTO student_bus
+        (student_id, sector, start_station, end_station, bus, sort)
+        VALUES
+        (#{studentId}, #{sector}, #{startStation}, #{endStation}, #{type}, #{sort})
+    </insert>
+    <delete id="deleteTransport">
+        DELETE FROM student_bus
+        WHERE student_id = #{studentId}
+    </delete>
+    
+    <delete id="delete">
+        DELETE FROM student2
+        WHERE id = #{id}
+    </delete>
+    
+    <select id="checkCodeDuplicating" resultType="int">
+        SELECT count(*)
+        FROM student2
+        WHERE 1=1
+            AND enter_year = #{enterYear}
+            AND enter_schoolkind = #{enterSchoolKind}
+            AND code = #{code}
+        <if test="id != null">
+            AND id != #{id}
+        </if>
+    </select>
+</mapper>

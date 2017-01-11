@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kokou.mapper.v2.TeacherMapper">
+    
+    <resultMap type="kokou.model.v2.teacher.Career" id="CareerResult">
+        <result property="place" column="place"/>
+        <result property="enterDate" column="enter_date"/>
+        <result property="retireDate" column="retire_date"/>
+        <result property="job" column="job"/>
+        <result property="teacherId" column="teacher_id"/>
+    </resultMap>
+    
+    <resultMap type="kokou.model.v2.teacher.FamilyMember" id="FamilyMemberResult">
+        <result property="relation" column="relation"/>
+        <result property="name" column="name"/>
+        <result property="birthday" column="birthday"/>
+        <result property="address" column="address"/>
+        <result property="with" column="with"/>
+        <result property="note" column="note"/>
+        <result property="teacherId" column="teacher_id"/>
+    </resultMap>
+    
+    <resultMap type="kokou.model.v2.teacher.FamilyInformation" id="FamilyInformationResult">
+        <result property="numberOfDependent" column="number_of_dependent"/>
+    </resultMap>
+    
+    <resultMap type="kokou.model.v2.teacher.Passport" id="PassportResult">
+        <result property="has" column="has"/>
+        <result property="no" column="no"/>
+        <result property="teacherId" column="teacher_id"/>
+    </resultMap>
+    
+    <resultMap type="kokou.model.v2.teacher.Contact" id="ContactResult">
+        <result property="name" column="name"/>
+        <result property="phone" column="phone"/>
+        <result property="relation" column="relation"/>
+        <result property="teacherId" column="teacher_id"/>
+    </resultMap>
+    
+    <resultMap type="kokou.model.v2.teacher.Transport" id="TransportResult">
+        <result property="startStation" column="start_station"/>
+        <result property="endStation" column="end_station"/>        
+        <result property="cost" column="cost"/>
+        <result property="teacherId" column="teacher_id"/>
+    </resultMap>
+    
+    <resultMap type="kokou.model.v2.teacher.DriverCard" id="DriverCardResult">
+        <result property="has" column="has"/>
+        <result property="type" column="type"/>
+        <result property="teacherId" column="teacher_id"/>
+    </resultMap>
+    
+    <resultMap type="kokou.model.v2.teacher.AttendingInformation" id="AttendingInformationResult">
+        <result property="duration" column="duration"/>
+        <result property="teacherId" column="teacher_id"/>
+    </resultMap>
+    
+    <resultMap type="kokou.model.v2.teacher.RewardPunishment" id="RewardPunishmentResult">
+        <result property="date" column="date"/>
+        <result property="content" column="content"/>
+        <result property="teacherId" column="teacher_id"/>
+    </resultMap>
+    
+    <resultMap type="kokou.model.v2.teacher.PositionInformation" id="PositionInformationResult">
+        <result property="currentPosition" column="current_position"/>
+        <result property="take.content" column="take_content"/>
+        <result property="take.date" column="take_date"/>
+        <result property="retire.content" column="retire_content"/>
+        <result property="retire.date" column="retire_date"/>
+        <result property="change.content" column="change_content"/>
+        <result property="change.date" column="change_date"/>
+    </resultMap>
+    
+    <resultMap type="kokou.model.v2.teacher.LastGraduation" id="LastGraduationResult">
+        <result property="schoolKind" column="school_kind"/>
+        <result property="schoolName" column="school_name"/>
+        <result property="schoolDepartment" column="school_department"/>
+        <result property="schoolSubject" column="school_subject"/>
+        <result property="schoolResult" column="school_result"/>
+        <result property="teacherScholar" column="teacher_scholar"/>
+    </resultMap>
+    
+    <resultMap type="kokou.model.v2.Teacher" id="TeacherResult">
+        <id property="id" column="teacher_id"/> 
+        <result property="enterDate" column="enter_date"/>
+        <result property="enterKind" column="enter_kind"/>
+        <result property="name" column="name"/>
+        <result property="nameKr" column="namekr"/>
+        <result property="nameNick" column="namenick"/>
+        <result property="sex" column="sex"/>
+        <result property="birthday" column="birthday"/>
+        <result property="address" column="address"/>
+        <result property="alterAddress" column="address2"/>
+        <result property="phone" column="phone"/>
+        <result property="fax" column="fax"/>
+        <result property="mobile" column="mobile"/>
+        <result property="nation" column="nation"/>
+        <result property="note" column="note"/>
+        <association property="positionInformation" column="teacher_id" select="findPositionInformationByTeacherId"/>
+        <association property="lastGraduation" column="teacher_id" select="findLastGraduationByTeacherId"/>
+        <association property="familyInformation" column="teacher_id" select="findFamilyInformationByTeacherId"/>
+        <association property="passport" column="teacher_id" select="findPassportByTeacherId"/>
+        <association property="attendingInformation" column="teacher_id" select="findAttendingByTeacherId"/>
+        <association property="attendingInformation.driverCard" column="teacher_id" select="findDriverCardByTeacherId"/>
+        <collection property="contacts" column="teacher_id" select="findContactsByTeacherId"/>
+        <collection property="careers" column="teacher_id" select="findCareersByTeacherId"/>
+        <collection property="rewardPunishments" column="teacher_id" select="findRewardPunishmentsByTeacherId"/>
+        <collection property="familyInformation.familyMembers" column="teacher_id" select="findFamilyMembersByTeacherId"/>
+        <collection property="attendingInformation.transports" column="teacher_id" select="findTransportsByTeacherId"/>
+    </resultMap>
+    <select id="findPositionInformationByTeacherId" parameterType="int" resultMap="PositionInformationResult">
+        SELECT
+            current_position, take_content, take_date, retire_content, retire_date, change_content, change_date, teacher_id
+        FROM teacher_positioninformation
+        WHERE teacher_id = #{teacherId}
+    </select>
+    <select id="findLastGraduationByTeacherId" parameterType="int" resultMap="LastGraduationResult">
+        SELECT
+            school_kind, school_name, school_department, school_subject, school_result, teacher_scholar, teacher_id
+        FROM teacher_lastgraduation  
+        WHERE teacher_id = #{teacherId}
+    </select>
+    <select id="findCareersByTeacherId" parameterType="int" resultMap="CareerResult">
+        SELECT
+           place, enter_date, retire_date, job, teacher_id
+        FROM teacher_career
+        WHERE teacher_id = #{teacherId}
+    </select>
+    <select id="findFamilyInformationByTeacherId" parameterType="int" resultMap="FamilyInformationResult">
+        SELECT
+            number_of_dependent, teacher_id
+        FROM teacher_familyinformation
+        WHERE teacher_id = #{teacherId}
+    </select>
+    <select id="findFamilyMembersByTeacherId" parameterType="int" resultMap="FamilyMemberResult">
+        SELECT
+            relation, name, birthday, address, `with`, note, teacher_id
+        FROM teacher_familymember
+        WHERE teacher_id = #{teacherId}
+    </select>
+    <select id="findPassportByTeacherId" parameterType="int" resultMap="PassportResult">
+        SELECT
+            has, no, teacher_id
+        FROM teacher_passport
+        WHERE teacher_id = #{teacherId}
+    </select>
+    <select id="findContactsByTeacherId" parameterType="int" resultMap="ContactResult">
+        SELECT
+            name, phone, relation, teacher_id
+        FROM teacher_contact
+        WHERE teacher_id = #{teacherId}
+    </select>
+    <select id="findTransportsByTeacherId" parameterType="int" resultMap="TransportResult">
+        SELECT
+            start_station, end_station, cost, teacher_id
+        FROM teacher_transport
+        WHERE teacher_id = #{teacherId}
+    </select>
+    <select id="findDriverCardByTeacherId" parameterType="int" resultMap="DriverCardResult">
+        SELECT
+            has, kind, teacher_id
+        FROM teacher_drivercard
+        WHERE teacher_id = #{teacherId}
+    </select>
+    <select id="findAttendingByTeacherId" parameterType="int" resultMap="AttendingInformationResult">
+        SELECT
+            duration, teacher_id
+        FROM teacher_attendinginformation
+        WHERE teacher_id = #{teacherId}
+    </select>
+    <select id="findRewardPunishmentsByTeacherId" parameterType="int" resultMap="RewardPunishmentResult">
+        SELECT
+            content, date, teacher_id
+        FROM teacher_rewardpunishment
+        WHERE teacher_id = #{teacherId}
+    </select>
+    <select id="find" resultMap="TeacherResult">
+        SELECT
+            id AS teacher_id,
+            enter_date, enter_kind,
+            name, namekr, namenick, sex, birthday, address, address2, phone, fax, mobile, nation, note
+        FROM teacher2
+        WHERE 1=1
+        <if test="teacherId != null">
+            AND id = #{teacherId}
+        </if>
+    </select>
+    <select id="getCount" resultType="int">
+        SELECT count(*) AS total
+        FROM teacher2
+        WHERE 1=1
+    </select>
+    
+    <update id="update">
+        UPDATE teacher2
+        SET
+        enter_date = #{enterDate},
+        enter_kind = #{enterKind},
+        name=#{name},
+        namekr=#{nameKr},
+        namenick=#{nameNick},
+        sex=#{sex},
+        birthday=#{birthday},
+        address=#{address},
+        address2=#{alterAddress},
+        phone=#{phone}, 
+        fax=#{fax},
+        mobile=#{mobile},
+        nation=#{nation},
+        note=#{note}
+        WHERE id=#{id}
+    </update>
+    <insert id="insert">
+        INSERT INTO teacher2
+        ( enter_date, enter_kind , name, namekr, namenick, sex, birthday, address, address2, phone, fax, mobile, nation, note, timestamp)
+        VALUES
+        ( #{enterDate}, #{enterKind}, #{name}, #{nameKr}, #{nameNick}, #{sex}, #{birthday}, #{address}, #{alterAddress}, #{phone}, #{fax}, #{mobile}, #{nation}, #{note}, #{timestamp})
+    </insert>
+    <insert id="insertPositionInformation">
+        INSERT INTO teacher_positioninformation
+        ( teacher_id, current_position, take_content, take_date, retire_content, retire_date, change_content, change_date)
+        VALUES
+        ( #{teacherId}, #{currentPosition}, #{take.content}, #{take.date}, #{retire.content}, #{retire.date}, #{change.content}, #{change.date})
+    </insert>
+    <delete id="deletePositionInformation">
+        DELETE FROM teacher_positioninformation
+        WHERE teacher_id = #{teacherId}
+    </delete>
+    <insert id="insertLastGraduation">
+        INSERT INTO teacher_lastgraduation
+        ( teacher_id, school_kind, school_name, school_department, school_subject, school_result, teacher_scholar)
+        VALUES
+        ( #{teacherId}, #{schoolKind}, #{schoolName}, #{schoolDepartment}, #{schoolSubject}, #{schoolResult}, #{teacherScholar})
+    </insert>
+    <delete id="deleteLastGraduation">
+        DELETE FROM teacher_lastgraduation
+        WHERE teacher_id = #{teacherId}
+    </delete>
+    <insert id="insertCareer">
+        INSERT INTO teacher_career
+        (teacher_id, place, enter_date, retire_date, job, sort)
+        VALUES
+        (#{teacherId}, #{place}, #{enterDate}, #{retireDate}, #{job}, #{sort})
+    </insert>
+    <delete id="deleteCareer">
+        DELETE FROM teacher_career
+        WHERE teacher_id = #{teacherId}
+    </delete>
+    <insert id="insertFamilyInformation">
+        INSERT INTO teacher_familyinformation
+        (teacher_id, number_of_dependent)
+        VALUES
+        (#{teacherId}, #{numberOfDependent})
+    </insert>
+    <delete id="deleteFamilyInformation">
+        DELETE FROM teacher_familyinformation
+        WHERE teacher_id = #{teacherId}
+    </delete>
+    <insert id="insertFamilyMember">
+        INSERT INTO teacher_familymember
+        ( teacher_id,  relation, name, birthday, address, `with`, note, `sort`)
+        VALUES
+        ( #{teacherId}, #{relation}, #{name}, #{birthday}, #{address}, #{with}, #{note}, #{sort})
+    </insert>
+    <delete id="deleteFamilyMember">
+        DELETE FROM teacher_familymember
+        WHERE teacher_id = #{teacherId}
+    </delete>
+    <insert id="insertPassport">
+        INSERT INTO teacher_passport
+        ( teacher_id,  has, no)
+        VALUES
+        (#{teacherId}, #{has}, #{no})
+    </insert>
+    <delete id="deletePassport">
+        DELETE FROM teacher_passport
+        WHERE teacher_id = #{teacherId}
+    </delete>
+    <insert id="insertContact">
+        INSERT INTO teacher_contact
+        (teacher_id, name, phone, relation, sort)
+        VALUES
+        (#{teacherId}, #{name}, #{phone}, #{relation}, #{sort})
+    </insert>
+    <delete id="deleteContact">
+        DELETE FROM teacher_contact
+        WHERE teacher_id = #{teacherId}
+    </delete>
+    <insert id="insertAttendingInformation">
+        INSERT INTO teacher_attendinginformation
+        (teacher_id, duration)
+        VALUES
+        (#{teacherId}, #{duration})
+    </insert>
+    <delete id="deleteAttendingInformation">
+        DELETE FROM teacher_attendinginformation
+        WHERE teacher_id = #{teacherId}
+    </delete>
+    <insert id="insertDriverCard">
+        INSERT INTO teacher_drivercard (teacher_id, has, kind)
+        VALUES(#{teacherId}, #{has}, #{kind})
+    </insert>
+    <delete id="deleteDriverCard">
+        DELETE FROM teacher_drivercard
+        WHERE teacher_id = #{teacherId}
+    </delete>
+    <insert id="insertTransport">
+        INSERT INTO teacher_transport
+        (teacher_id, start_station, end_station, cost, sort)
+        VALUES
+        (#{teacherId}, #{startStation}, #{endStation}, #{cost}, #{sort})
+    </insert>
+    <delete id="deleteTransport">
+        DELETE FROM teacher_transport
+        WHERE teacher_id = #{teacherId}
+    </delete>
+    <insert id="insertRewardPunishment">
+        INSERT INTO teacher_rewardpunishment
+        (teacher_id, date, content)
+        VALUES
+        (#{teacherId}, #{date}, #{content})
+    </insert>
+    <delete id="deleteRewardPunishment">
+        DELETE FROM teacher_rewardpunishment
+        WHERE teacher_id = #{teacherId}
+    </delete>
+    <delete id="delete">
+        DELETE FROM teacher2
+        WHERE id = #{id}
+    </delete>
+    <select id="getIdByTimestamp" resultType="Integer">
+        SELECT id
+        FROM teacher2
+        WHERE timestamp = #{timestamp}
+    </select>
+</mapper>

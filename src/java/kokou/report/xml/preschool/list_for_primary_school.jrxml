@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="list_for_primary_school" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="KOKOU_CURRENT_DATE" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2015.5.13"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="KOKOU_DATE_DELIMETER" class="java.lang.String">
+		<defaultValueExpression><![CDATA["."]]></defaultValueExpression>
+	</parameter>
+	<parameter name="KOKOU_BIRTHDAY_DELIMETER" class="java.lang.String">
+		<defaultValueExpression><![CDATA["."]]></defaultValueExpression>
+	</parameter>
+	<queryString language="xPath">
+		<![CDATA[/root/student]]>
+	</queryString>
+	<field name="sex" class="java.lang.String">
+		<fieldDescription><![CDATA[sex]]></fieldDescription>
+	</field>
+	<field name="birthdayYear" class="java.lang.String">
+		<fieldDescription><![CDATA[birthday/year]]></fieldDescription>
+	</field>
+	<field name="birthdayMonth" class="java.lang.String">
+		<fieldDescription><![CDATA[birthday/month]]></fieldDescription>
+	</field>
+	<field name="birthdayDay" class="java.lang.String">
+		<fieldDescription><![CDATA[birthday/day]]></fieldDescription>
+	</field>
+	<field name="schoolYear" class="java.lang.String">
+		<fieldDescription><![CDATA[class/schoolYear]]></fieldDescription>
+	</field>
+	<field name="name" class="java.lang.String">
+		<fieldDescription><![CDATA[name]]></fieldDescription>
+	</field>
+	<field name="nameKr" class="java.lang.String">
+		<fieldDescription><![CDATA[nameKr]]></fieldDescription>
+	</field>
+	<field name="phoneNo" class="java.lang.String">
+		<fieldDescription><![CDATA[phoneNo]]></fieldDescription>
+	</field>
+	<field name="address" class="java.lang.String">
+		<fieldDescription><![CDATA[address]]></fieldDescription>
+	</field>
+	<field name="residence" class="java.lang.String">
+		<fieldDescription><![CDATA[residence]]></fieldDescription>
+	</field>
+	<variable name="dateDelimeter" class="java.lang.String">
+		<variableExpression><![CDATA[$V{dateDelimeter}]]></variableExpression>
+		<initialValueExpression><![CDATA[$P{KOKOU_DATE_DELIMETER}==null || $P{KOKOU_DATE_DELIMETER}.trim().isEmpty()?".":$P{KOKOU_DATE_DELIMETER}.trim()]]></initialValueExpression>
+	</variable>
+	<variable name="birthdayDelimeter" class="java.lang.String">
+		<variableExpression><![CDATA[$V{birthdayDelimeter}]]></variableExpression>
+		<initialValueExpression><![CDATA[$P{KOKOU_BIRTHDAY_DELIMETER}==null || $P{KOKOU_BIRTHDAY_DELIMETER}.trim().isEmpty()?$V{dateDelimeter}:$P{KOKOU_BIRTHDAY_DELIMETER}.trim()]]></initialValueExpression>
+	</variable>
+	<variable name="no" class="java.lang.Integer">
+		<variableExpression><![CDATA[$V{no}+1]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="currentDate" class="java.lang.String">
+		<variableExpression><![CDATA[$P{KOKOU_CURRENT_DATE}!=null?$P{KOKOU_CURRENT_DATE}.trim():""]]></variableExpression>
+		<initialValueExpression><![CDATA[$P{KOKOU_CURRENT_DATE}!=null?$P{KOKOU_CURRENT_DATE}.trim():""]]></initialValueExpression>
+	</variable>
+	<variable name="currentYear" class="java.lang.String">
+		<variableExpression><![CDATA[$V{currentDate}.length()>3?$V{currentDate}.substring(0,4):$V{currentDate}]]></variableExpression>
+		<initialValueExpression><![CDATA[$V{currentDate}.length()>3?$V{currentDate}.substring(0,4):$V{currentDate}]]></initialValueExpression>
+	</variable>
+	<variable name="shortCurrentYear" class="java.lang.String">
+		<variableExpression><![CDATA[$V{currentYear}.length()==4?$V{currentYear}.substring(2,4):$V{currentYear}.length()==3?$V{currentYear}.substring(1,3):$V{currentYear}]]></variableExpression>
+		<initialValueExpression><![CDATA[$V{currentYear}.length()==4?$V{currentYear}.substring(2,4):$V{currentYear}.length()==3?$V{currentYear}.substring(1,3):$V{currentYear}]]></initialValueExpression>
+	</variable>
+	<variable name="shortSchoolYear" class="java.lang.String">
+		<variableExpression><![CDATA[$F{schoolYear}==null?"":$F{schoolYear}.trim().isEmpty()?"":$F{schoolYear}.trim().substring(0,1)]]></variableExpression>
+	</variable>
+	<variable name="sex" class="java.lang.String">
+		<variableExpression><![CDATA[$F{sex}==null?"":$F{sex}.trim().isEmpty()?"":$F{sex}.trim().substring(0,1)]]></variableExpression>
+	</variable>
+	<variable name="birthdayYear" class="java.lang.String">
+		<variableExpression><![CDATA[$F{birthdayYear}!=null?$F{birthdayYear}.trim():""]]></variableExpression>
+	</variable>
+	<variable name="shortBirthdayYear" class="java.lang.String">
+		<variableExpression><![CDATA[$V{birthdayYear}.length()>3?$V{birthdayYear}.substring(2,4):$V{birthdayYear}.length()==3?$V{birthdayYear}.substring(1,3):$V{birthdayYear}]]></variableExpression>
+	</variable>
+	<variable name="birthdayMonth" class="java.lang.String">
+		<variableExpression><![CDATA[$F{birthdayMonth}!=null?$F{birthdayMonth}.trim():""]]></variableExpression>
+	</variable>
+	<variable name="birthdayDay" class="java.lang.String">
+		<variableExpression><![CDATA[$F{birthdayDay}!=null?$F{birthdayDay}.trim():""]]></variableExpression>
+	</variable>
+	<variable name="shortBirthday" class="java.lang.String">
+		<variableExpression><![CDATA[!$V{shortBirthdayYear}.isEmpty() || !$V{birthdayMonth}.isEmpty() || !$V{birthdayDay}.isEmpty()?$V{shortBirthdayYear}+$V{birthdayDelimeter}+$V{birthdayMonth}+$V{birthdayDelimeter}+$V{birthdayDay}:""]]></variableExpression>
+	</variable>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="9" width="30" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="MS PMincho" size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[学年]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="9" width="35" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="MS PMincho" size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[学年番号]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="65" y="9" width="100" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="MS PMincho" size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[氏名]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="165" y="9" width="120" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="MS PMincho" size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[ハングル名前]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="285" y="9" width="30" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="MS PMincho" size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[性別]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="315" y="9" width="60" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="MS PMincho" size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[生年月日]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="375" y="9" width="80" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="MS PMincho" size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[電話番号]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="9" width="250" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="MS PMincho" size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[住所]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="705" y="9" width="40" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="MS PMincho" size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[駐在]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="30" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="GulimChe"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{shortSchoolYear}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="30" y="0" width="35" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="GulimChe"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{no}.toString()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="65" y="0" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="MS PMincho"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="165" y="0" width="120" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="GulimChe"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nameKr}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="285" y="0" width="30" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="MS PMincho"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{sex}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="315" y="0" width="60" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="MS PMincho"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{shortBirthday}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="375" y="0" width="80" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="MS PMincho"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{phoneNo}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="455" y="0" width="250" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="MS PMincho"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{address}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="705" y="0" width="40" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="MS PMincho"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{residence}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

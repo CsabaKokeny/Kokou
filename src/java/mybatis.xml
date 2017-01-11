@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//En"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+    </typeAliases>
+	
+    <environments default ="kokou-runtime">
+        <environment id="kokou-runtime">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/kokou?characterEncoding=utf-8"/>
+                <property name="username" value="root"/>
+                <property name="password" value=""/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="kokou/mapper/LoginMapper.xml"/>
+        <mapper resource="kokou/mapper/UserMapper.xml"/>
+        <mapper resource="kokou/mapper/NationMapper.xml"/>
+        <mapper resource="kokou/mapper/SexMapper.xml"/>
+        <mapper resource="kokou/mapper/DepartmentMapper.xml"/>
+        <mapper resource="kokou/mapper/ClassMapper.xml"/>
+        <mapper resource="kokou/mapper/LessonMapper.xml"/>
+        <mapper resource="kokou/mapper/RelationTypeMapper.xml"/>
+        <mapper resource="kokou/mapper/PhoneTypeMapper.xml"/>
+        <mapper resource="kokou/mapper/SchoolStateTypeMapper.xml"/>
+        
+        <mapper resource="kokou/mapper/v2/StudentMapper.xml"/>
+        <mapper resource="kokou/mapper/v2/TeacherMapper.xml"/>
+    </mappers>
+</configuration>
+	

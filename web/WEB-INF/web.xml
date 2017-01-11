@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	 version="3.0">
+<!-- struts2 sector -->
+    <filter>
+        <filter-name>struts2</filter-name>
+        <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>report</filter-name>
+        <filter-class>kokou.filter.KokouReportFilter</filter-class>
+    </filter>
+    
+    <filter-mapping>
+        <filter-name>report</filter-name>
+        <url-pattern>/reports/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>struts2</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
+<!-- struts2 sector end -->
+<!-- spring sector -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:applicationContext.xml</param-value>
+        <!--
+        <param-value> WEB-INF/applicationContext.xml</param-value>
+        -->
+    </context-param>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>kokou.filter.KokouSessionListener</listener-class>
+    </listener>
+<!-- spring sector end -->
+<!-- mybatis sector -->
+<!-- mybatis sector end -->
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.htm</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>default.html</welcome-file>
+        <welcome-file>default.htm</welcome-file>
+        <welcome-file>default.jsp</welcome-file>
+    </welcome-file-list>
+</web-app>

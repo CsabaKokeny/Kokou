@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kokou.mapper.LessonMapper">
+    <insert id="insert">
+        INSERT lesson (name, create_time, update_time, timestamp, nameen, namekr, department, level, desc )
+        VALUES ( #{name}, #{createTime}, #{updateTime}, #{timestamp}, #{nameen}, #{namekr}, #{department}, #{level}, #{description} )
+    </insert>
+    
+    <update id="update">
+        UPDATE lesson
+        SET
+        update_time = #{updateTime}
+        <if test="name != null">
+            <if test="name != ''">
+                ,name = #{name}
+            </if>
+        </if>
+        <if test="nameen != null">    
+            ,nameen = #{nameen}
+        </if>
+        <if test="namekr != null">
+            ,namekr = #{namekr}
+        </if>
+        <if test="department != null">
+            <if test="department != ''">
+                ,department = #{department}
+            </if>
+        </if>
+        <if test="level != null">
+            ,level = #{level}
+        </if>
+        <if test="description != null">
+           ,`desc` = #{description}
+        </if>
+        <if test="description == null">
+           ,`desc` = null
+        </if>
+        WHERE id = #{lessonId}
+    </update>
+    
+    <select id="getIdByTimestamp" resultType="int">
+        SELECT t.id AS lessonId
+        FROM class t
+        WHERE
+            t.timestamp = #{timestamp}
+    </select>
+    
+    
+    <select id="getList" resultType="map">
+        SELECT
+            t.id AS lessonId,
+            t.name AS name,
+            t.namekr AS namekr,
+            t.nameen AS nameen,
+            t.department AS department,
+            d.name AS departmentLabel,
+            t.level AS level,
+            t.desc AS description
+        FROM lesson t
+        LEFT JOIN department d ON d.code = t.department
+        WHERE 1 = 1
+        <if test="lessonId != null">
+            AND t.id = #{lessonId}
+        </if>
+        ORDER BY
+            d.sort ASC, t.level ASC, t.name ASC
+    </select>
+</mapper>

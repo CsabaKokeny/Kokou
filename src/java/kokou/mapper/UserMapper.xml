@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kokou.mapper.UserMapper">
+    
+    <select id="isDuplicated" resultType="int">
+        SELECT id AS userId
+        FROM user u
+        WHERE u.user_name = #{userName}
+    </select>
+    
+    <select id="isTeacherExisted" resultType="int">
+        SELECT id AS userId
+        FROM user u
+        WHERE u.teacher_id = #{teacherId}
+    </select>
+    
+    <select id="getIdByTimestamp" resultType="int">
+        SELECT id AS userId
+        FROM user u
+        WHERE 
+            u.timestamp = #{timestamp}
+    </select>
+    
+    <insert id="insert">
+        INSERT user (user_name, user_password, teacher_id, create_time, update_time, timestamp)
+        VALUES ( #{userName}, #{userPassword}, #{teacherId}, #{createTime}, #{updateTime}, #{timestamp} )
+    </insert>
+    
+    <update id="update">
+        UPDATE user
+        SET
+        update_time = #{updateTime}
+        <if test="userName != null">
+            <if test="userName != ''">
+                ,user_name = #{userName}
+            </if>
+        </if>
+        <if test="userPassword != null">
+            <if test="userPassword != ''">
+                ,user_password = #{userPassword}
+            </if>
+        </if>
+        WHERE id = #{userId}
+    </update>
+    
+    
+</mapper>

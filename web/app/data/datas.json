@@ -1,0 +1,10 @@
+{
+    "success":true,,
+    "feeds":[
+        {"title":"教職員管理", "url":"showTeacherManager"},
+        {"title":"クラス管理", "url":"showClassManager"},
+        {"title":"学生管理", "url":"showStudentManager"},
+        {"title":"科目管理", "url":"showLessonManager"},
+        {"title":"成績管理", "url":"showMarkManager"}
+    ]
+}

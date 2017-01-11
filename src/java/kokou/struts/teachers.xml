@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <package name="kokou-teachers" extends="kokou-default" namespace="/teacher">
+        <action name="data" class="TeacherAction" method="getTeacherList">
+            <result name="success">/WEB-INF/view/teacher/data.jsp</result>
+        </action>
+        <action name="save" class="teacher.save"></action>
+        <action name="list" class="teacher.list"></action>
+        <action name="detail" class="teacher.detail"></action>
+    </package>
+    <package name="kokou-teacher-v2" extends="kokou-default" namespace="/teacher2">
+        <action name="save" class="teacher.v2.save"></action>
+        <action name="detail" class="teacher.v2.detail"></action>
+        <action name="list" class="teacher.v2.list"></action>
+        <action name="delete" class="teacher.v2.delete"></action>
+    </package>
+</struts>

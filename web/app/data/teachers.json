@@ -1,0 +1,7 @@
+{
+    "success":true,
+    "teachers":[
+        {"id":1, "name":"Ed", "birthday": "1987-09-22"},
+        {"id":2, "name":"Tommy", "birthday": "1999-01-01"}
+    ]
+}

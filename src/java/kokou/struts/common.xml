@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <package name="kokou-common" extends="kokou-default" namespace="/">
+        <action name="login" class="LoginAction">
+            <result name="input">/WEB-INF/view/login/input.jsp</result>
+        </action>
+        <action name="loginAction" class="LoginAction" method="login">
+            <result name="fail" >/WEB-INF/view/login/fail.jsp</result>
+            <result name="success">/WEB-INF/view/login/success.jsp</result>
+        </action>
+        <action name="start" class="StartAction">
+            <result name="login">/WEB-INF/view/login/input.jsp</result>
+            <result name="success">/WEB-INF/view/main/first.jsp</result>
+        </action>
+    </package>
+    <package name="kokou-nation" extends="kokou-default" namespace="/nation">
+        <action name="list" class="nation.list"></action>
+    </package>
+    <package name="kokou-department" extends="kokou-default" namespace="/department">
+        <action name="list" class="department.list"></action>
+    </package>
+    <package name="kokou-sex" extends="kokou-default" namespace="/sex">
+        <action name="list" class="sex.list"></action>
+    </package>
+    <package name="kokou-relation-type" extends="kokou-default" namespace="/relation_type">
+        <action name="list" class="relationType.list"></action>
+    </package>
+    <package name="kokou-phone-type" extends="kokou-default" namespace="/phone_type">
+        <action name="list" class="phoneType.list"></action>
+    </package>
+    <package name="kokou-school-state-type" extends="kokou-default" namespace="/school_state_type">
+        <action name="list" class="schoolStateType.list"></action>
+    </package>
+    <package name="kokou-print" extends="kokou-default" namespace="/print">
+        <action name="panel" class="print.panel">
+            <result name="success">/WEB-INF/view/print_panel.jsp</result>
+        </action>
+    </package>
+</struts>
